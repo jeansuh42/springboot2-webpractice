@@ -4,34 +4,38 @@ import com.jeansuh.book.springboot.service.PostsService;
 import com.jeansuh.book.springboot.web.dto.PostsResponseDto;
 import com.jeansuh.book.springboot.web.dto.PostsSaveRequestDto;
 import com.jeansuh.book.springboot.web.dto.PostsUpdateRequestDto;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-
 @RequiredArgsConstructor
 @RestController
-public class PostApiController {
-
+public class PostsApiController {
 
     private final PostsService postsService;
 
-
-    @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto){
+    @PostMapping("api/v1/posts")
+    public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
 
-
-    @PutMapping("/api/v1/ports/{id}")
-    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto){
+    @PutMapping("/api/v1/posts/{id}")
+    public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);
     }
 
-    @GetMapping("/api/v1/posts/{id}")
-    public PostsResponseDto findById (@PathVariable Long id){
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id) {
+        postsService.delete(id);
+        return id;
+    }
+
+    @GetMapping("api/v1/posts/{id}")
+    public PostsResponseDto findById (@PathVariable Long id) {
         return postsService.findById(id);
     }
 
 
+
+
 }
+
