@@ -1,5 +1,6 @@
 package com.jeansuh.book.springboot.web;
 
+import com.jeansuh.book.springboot.config.auth.LoginUser;
 import com.jeansuh.book.springboot.config.auth.dto.SessionUser;
 import com.jeansuh.book.springboot.service.PostsService;
 import com.jeansuh.book.springboot.web.dto.PostsResponseDto;
@@ -19,14 +20,15 @@ import javax.servlet.http.HttpSession;
 public class IndexController {
 
     private final PostsService postsService;
-    private final HttpSession httpSession;
+//    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
 
         model.addAttribute("posts", postsService.findAllDesc());
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
+        // annoation 인터페이스 생성 후 반복 코드 개선
 
         if(user!=null){
             model.addAttribute("userName", user.getName());
@@ -37,6 +39,7 @@ public class IndexController {
 
     @GetMapping("/posts/save")
     public String postsSave() {
+
         return "posts-save";
     }
 
